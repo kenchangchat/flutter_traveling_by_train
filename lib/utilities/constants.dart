@@ -56,5 +56,5 @@ const MAP_LAYER = [
 
 // local
 String PROTOCAL = "http";
-String IP_ADDRESS_URL = '192.168.1.125';
-String IP_ADDRESS_URL_API = '192.168.1.125:3002';
+String IP_ADDRESS_URL = 'localhost';
+String IP_ADDRESS_URL_API = 'localhost:3002';

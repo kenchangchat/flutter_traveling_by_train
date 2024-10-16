@@ -116,42 +116,70 @@ class _LoginPageState extends State<LoginPage> {
     // });
     if (paramlogin['username'] != '' && paramlogin['password'] != '') {
       try {
-        var resUser = await _req.reqLogin('/api/login', paramlogin);
-        if (resUser.isNotEmpty && resUser['success'] == true) {
-          if (resUser['data']['data'] != null) {
-            var data = resUser['data']['data'];
-            setState(() {
-              dataUser['user_id'] = data['user_id'] ?? "";
-              dataUser['user_name'] = data['user_name'] ?? "";
-              dataUser['user_username'] = data['user_username'] ?? "";
-              dataUser['user_type'] = data['user_type'] ?? "";
-              dataUser['token'] = data['token'] ?? "";
-            });
-            await _storage.setAuthList(dataUser);
-            Future.delayed(Duration(seconds: 2), () {
-              setState(() => _loader = false);
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: HomePage(),
-                  inheritTheme: true,
-                  ctx: context,
-                ),
-              );
-            });
-          } else {
+        // var resUser = await _req.reqLogin('/api/login', paramlogin);
+        // if (resUser.isNotEmpty && resUser['success'] == true) {
+        //   if (resUser['data']['data'] != null) {
+        //     var data = resUser['data']['data'];
+        //     setState(() {
+        //       dataUser['user_id'] = data['user_id'] ?? "";
+        //       dataUser['user_name'] = data['user_name'] ?? "";
+        //       dataUser['user_username'] = data['user_username'] ?? "";
+        //       dataUser['user_type'] = data['user_type'] ?? "";
+        //       dataUser['token'] = data['token'] ?? "";
+        //     });
+        //     await _storage.setAuthList(dataUser);
+        //     Future.delayed(Duration(seconds: 2), () {
+        //       setState(() => _loader = false);
+        //       Navigator.push(
+        //         context,
+        //         PageTransition(
+        //           type: PageTransitionType.rightToLeft,
+        //           child: HomePage(),
+        //           inheritTheme: true,
+        //           ctx: context,
+        //         ),
+        //       );
+        //     });
+        //   } else {
+        //     setState(() => _loader = false);
+        //     var msgError = resUser['error'] != null
+        //         ? resUser['error']
+        //         : "Username หรือ Password ไม่ถูกต้อง!";
+        //     _utils.showAlert(context, "ผิดพลาด", msgError);
+        //   }
+        // } else {
+        //   setState(() => _loader = false);
+        //   var msgError =
+        //       resUser['error'] != null ? resUser['error'] : "เกิดข้อผิดพลาด!";
+        //   _utils.showAlert(context, "ERROR", msgError);
+        // }
+        if (paramlogin['username'] == 'test' &&
+            paramlogin['password'] == '1234') {
+          setState(() {
+            dataUser['user_id'] = 1;
+            dataUser['user_name'] = "User Test";
+            dataUser['user_username'] = "test";
+            dataUser['user_type'] = 1;
+            dataUser['token'] =
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE3Mjg5ODE1MTYsImV4cCI6MTcyOTA2NzkxNn0.63BB01Pz50AMgdeoke71GDVr73beSkTfq2UjRZazOAg";
+          });
+          await _storage.setAuthList(dataUser);
+          Future.delayed(Duration(seconds: 2), () {
             setState(() => _loader = false);
-            var msgError = resUser['error'] != null
-                ? resUser['error']
-                : "Username หรือ Password ไม่ถูกต้อง!";
-            _utils.showAlert(context, "ผิดพลาด", msgError);
-          }
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.rightToLeft,
+                child: HomePage(),
+                inheritTheme: true,
+                ctx: context,
+              ),
+            );
+          });
         } else {
           setState(() => _loader = false);
-          var msgError =
-              resUser['error'] != null ? resUser['error'] : "เกิดข้อผิดพลาด!";
-          _utils.showAlert(context, "ERROR", msgError);
+          _utils.showAlert(
+              context, "ผิดพลาด", "Username หรือ Password ไม่ถูกต้อง!");
         }
       } catch (e) {
         setState(() => _loader = false);

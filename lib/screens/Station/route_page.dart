@@ -39,23 +39,92 @@ class _MyRoutePageState extends State<MyRoutePage> {
       stations = [];
     });
     try {
-      var resp = await _req.reqPostAPI('/api/getStationsList', {});
-      if (resp.isNotEmpty && resp['success'] == true) {
-        if (resp['data']['data'].length > 0) {
-          var data = resp['data']['data'];
-          for (var i in data) {
-            setState(() {
-              stations.add(Station(id: i['station_id'], name: i['name']));
-            });
-          }
+      // var resp = await _req.reqPostAPI('/api/getStationsList', {});
+      // if (resp.isNotEmpty && resp['success'] == true) {
+      //   if (resp['data']['data'].length > 0) {
+      //     var data = resp['data']['data'];
+      //     for (var i in data) {
+      //       setState(() {
+      //         stations.add(Station(id: i['station_id'], name: i['name']));
+      //       });
+      //     }
+      //   }
+      // } else {
+      //   _utils.showToast(
+      //     context,
+      //     "เกิดข้อผิดพลาด",
+      //     "ไม่พบข้อมูล",
+      //   );
+      // }
+      List data = [
+        {
+          "station_id": 1,
+          "type": "BTS",
+          "name": "หมอชิต",
+          "code": "N8",
+          "lat": 13.802,
+          "lng": 100.551,
+          "first_train": "05:00",
+          "last_train": "11:00 "
+        },
+        {
+          "station_id": 2,
+          "type": "BTS",
+          "name": "พญาไท",
+          "code": "N2",
+          "lat": 13.755,
+          "lng": 100.532,
+          "first_train": "05:00",
+          "last_train": "11:00"
+        },
+        {
+          "station_id": 3,
+          "type": "BTS",
+          "name": "สยาม",
+          "code": "CEN",
+          "lat": 13.745,
+          "lng": 100.534,
+          "first_train": "05:00",
+          "last_train": "11:00"
+        },
+        {
+          "station_id": 4,
+          "type": "MRT",
+          "name": "สวนจตุจักร",
+          "code": "BL13",
+          "lat": 13.803,
+          "lng": 100.553,
+          "first_train": "05:00",
+          "last_train": "11:00"
+        },
+        {
+          "station_id": 5,
+          "type": "MRT",
+          "name": "สุขุมวิท",
+          "code": "BL21",
+          "lat": 13.736,
+          "lng": 100.56,
+          "first_train": "05:00",
+          "last_train": "23:00"
+        },
+        {
+          "station_id": 6,
+          "type": "ARL",
+          "name": "พญาไท",
+          "code": "ARL1",
+          "lat": 13.756,
+          "lng": 100.532,
+          "first_train": "05:00",
+          "last_train": "23:00"
         }
-      } else {
-        _utils.showToast(
-          context,
-          "เกิดข้อผิดพลาด",
-          "ไม่พบข้อมูล",
-        );
-      }
+      ];
+      setState(() {
+        for (var i in data) {
+          setState(() {
+            stations.add(Station(id: i['station_id'], name: i['name']));
+          });
+        }
+      });
     } catch (err) {
       _utils.showToast(
         context,
@@ -70,22 +139,79 @@ class _MyRoutePageState extends State<MyRoutePage> {
       routeList = [];
     });
     try {
-      Map param = {"from_station_id": "1", "to_station_id": "5"};
-      var resp = await _req.reqPostAPI('/api/getRoute', param);
-      if (resp.isNotEmpty && resp['success'] == true) {
-        if (resp['data']['data'].length > 0) {
-          var data = resp['data']['data'];
-          setState(() {
-            routeList.addAll(data);
-          });
+      // Map param = {"from_station_id": "1", "to_station_id": "5"};
+      // var resp = await _req.reqPostAPI('/api/getRoute', param);
+      // if (resp.isNotEmpty && resp['success'] == true) {
+      //   if (resp['data']['data'].length > 0) {
+      //     var data = resp['data']['data'];
+      //     setState(() {
+      //       routeList.addAll(data);
+      //     });
+      //   }
+      // } else {
+      //   _utils.showToast(
+      //     context,
+      //     "เกิดข้อผิดพลาด",
+      //     "ไม่พบข้อมูล",
+      //   );
+      // }
+      List data = [
+        {
+          "from_station": {
+            "name": "หมอชิต",
+            "code": "N8",
+            "line": "BTS สายสีเขียว"
+          },
+          "to_station": {
+            "name": "สุขุมวิท",
+            "code": "BL21",
+            "line": "MRT สายสีน้ำเงิน"
+          },
+          "lines": [
+            {
+              "line": "BTS สายสีเขียว",
+              "color": "green",
+              "stations": [
+                {"name": "หมอชิต", "code": "N8"},
+                {"name": "สะพานควาย", "code": "N7"},
+                {"name": "อารีย์", "code": "N5"},
+                {"name": "สนามเป้า", "code": "N4"},
+                {"name": "อนุสาวรีย์ชัยสมรภูมิ", "code": "N3"},
+                {"name": "พญาไท", "code": "N2"}
+              ],
+              "fare": 40,
+              "time": 30
+            },
+            {
+              "line": "BTS สายสีเขียว - MRT สายสีน้ำเงิน",
+              "color": "grey",
+              "stations": [],
+              "fare": 0,
+              "time": 5
+            },
+            {
+              "line": "MRT สายสีน้ำเงิน",
+              "color": "blue",
+              "stations": [
+                {"name": "เพชรบุรี", "code": "BL20"},
+                {"name": "สุขุมวิท", "code": "BL21"}
+              ],
+              "fare": 30,
+              "time": 10
+            }
+          ],
+          "total_stations": 8,
+          "total_time": 45,
+          "total_fare": 70,
+          "fare_breakdown": [
+            {"line": "BTS สายสีเขียว", "fare": 40},
+            {"line": "MRT สายสีน้ำเงิน", "fare": 30}
+          ]
         }
-      } else {
-        _utils.showToast(
-          context,
-          "เกิดข้อผิดพลาด",
-          "ไม่พบข้อมูล",
-        );
-      }
+      ];
+      setState(() {
+        routeList.addAll(data);
+      });
     } catch (err) {
       _utils.showToast(
         context,
